@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Projetos - Vandilson Gomes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+          /* Configurações Gerais */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            color: white;
+            background: #0e0e0f;
+            overflow-x: hidden; /* Evita barras de rolagem horizontais */
+        }
+
+        /* Canvas (Fundo Animado) */
+        canvas {
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: rgba(14, 14, 15, 0.9); /* Fundo translúcido */
+            z-index: 1000; /* Garante que o header fique acima do conteúdo */
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav ul li a:hover,
+        nav ul li a:focus {
+            color: #d7bd9a; /* Cor ao passar o mouse ou focar */
+        }
+
+
+        /* Estilo da linha inferior */
+        nav ul li a::before {
+            content: '';
+            position: absolute;
+            bottom: -2px; /* Distância da linha abaixo */
+            left: 0;
+            width: 0;
+            height: 2px; /* Espessura da linha */
+            background-color: #d7bd9a; /* Cor da linha */
+            transition: width 0.3s ease; /* Animação da largura */
+        }
+
+        nav ul li a:hover::before,
+        nav ul li a:focus::before {
+            width: 100%; /* Expande a linha ao passar o mouse ou focar */
+        }
+        
+        main {
+            padding-top: 80px; /* Ajuste o padding-top para evitar sobreposição com o header */
+              min-height: calc(100vh - 80px);
+             padding: 4rem 0;
+        }
+        
+         .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            text-align: center;
+        }
+        
+       h1 {
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .project-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .project-card {
+            width: 300px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+             background: rgba(255, 255, 255, 0.15);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: skewX(-30deg);
+            transition: 0.5s;
+        }
+
+        .project-card:hover::before {
+            left: 100%;
+        }
+        
+        .project-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .project-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .project-card p {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+        
+         /*Botões*/
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #0056b3;
+        }
+        
+         /* Footer */
+        footer {
+            background: #0a0a0b;
+            padding: 1rem;
+            text-align: center;
+            position: relative; /* Necessário para o pseudo-elemento */
+             margin-top: 4rem;
+        }
+
+        footer::before {
+            content: ''; /* Cria um elemento vazio */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1); /* Linha fina e leve */
+        }
+
+
+        footer p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+        
+    </style>
+</head>
+<body>
+    <canvas id="quantumCanvas"></canvas>
+    <header>
+        <nav>
+            <div class="logo">VG</div>
+            <ul>
+                <li><a href="index.html#sobre-mim">Sobre Mim</a></li>
+                <li><a href="projetos.html">Projetos</a></li>
+               <li><a href="index.html#contato">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="container">
+          <h1>Meus Projetos</h1>
+            <div class="project-grid">
+            <div class="project-card">
+            <img src="img/typing-game-thumb.png" alt="Thumbnail do Jogo de Digitação">
+                <h3>Jogo de Digitação</h3>
+                <p>
+                    Um jogo interativo para melhorar suas habilidades de digitação com frases de filmes da Marvel.
+                </p>
+                <a href="digitation-game.html" target="_blank" class="btn">Ver Projeto</a>
+                </div>
+                
+            <div class="project-card">
+                 <img src="img/portfolio-thumb.png" alt="Thumbnail do Site Portfólio">
+                <h3>Site de Portfólio</h3>
+                <p>
+                   Um site moderno para exibir habilidades, projetos e contato profissional.
+                </p>
+                <a href="portfolio.html" target="_blank" class="btn">Ver Projeto</a>
+            </div>
+                
+            <div class="project-card">
+                <img src="img/investment-calculator-thumb.png" alt="Thumbnail da Calculadora de Investimentos">
+                <h3>Calculadora de Investimentos</h3>
+                <p>
+                   Ferramenta simples para simular rendimentos em diferentes modalidades de investimento.
+                </p>
+                <a href="investment-calculator.html" target="_blank" class="btn">Ver Projeto</a>
+            </div>
+                
+                <div class="project-card">
+                <img src="img/quantum-simulator-thumb.png" alt="Thumbnail do Simulador de Computação Quântica">
+                <h3>Simulador de Computação Quântica</h3>
+                <p>
+                    Uma visualização interativa para explicar conceitos básicos de computação quântica.
+                </p>
+                <a href="quantum-simulator.html" target="_blank" class="btn">Ver Projeto</a>
+               </div>
+            </div>
+        </div>
+    </main>
+     <footer>
+        <p>© 2024 Vandilson Gomes. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        // Canvas para fundo animado
+        const canvas = document.getElementById("quantumCanvas");
+        const ctx = canvas.getContext("2d");
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particlesArray = [];
+        const colors = ["#ececec", "#0800ff", "#0800ff", "#ececec"];
+
+        class Particle {
+            constructor(x, y, size, color, speedX, speedY) {
+                this.x = x;
+                this.y = y;
+                this.size = size;
+                this.color = color;
+                this.speedX = speedX;
+                this.speedY = speedY;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            const numberOfParticles = 100;
+            particlesArray.length = 0;
+
+            for (let i = 0; i < numberOfParticles; i++) {
+                const size = Math.random() * 3 + 1;
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const speedX = (Math.random() - 0.5) * 2;
+                const speedY = (Math.random() - 0.5) * 2;
+
+                particlesArray.push(new Particle(x, y, size, color, speedX, speedY));
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            particlesArray.forEach((particle) => {
+                particle.update();
+                particle.draw();
+            });
+
+            connectParticles();
+            requestAnimationFrame(animateParticles);
+        }
+
+        function connectParticles() {
+            for (let a = 0; a < particlesArray.length; a++) {
+                for (let b = a; b < particlesArray.length; b++) {
+                    const dx = particlesArray[a].x - particlesArray[b].x;
+                    const dy = particlesArray[a].y - particlesArray[b].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 100) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = "rgba(255, 255, 255, " + (1 - distance / 100) + ")";
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        initParticles();
+        animateParticles();
+
+        window.addEventListener("resize", () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+        });
+    </script>
+</body>
+</html>
